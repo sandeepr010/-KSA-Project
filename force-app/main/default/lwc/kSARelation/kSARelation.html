@@ -1,0 +1,61 @@
+<template>
+    <div>
+        <div class="slds-float_right slds-p-bottom_medium">
+            <lightning-button class="slds-p-right_x-small" if:true={editRelationClick} label="Edit" onclick={onRelationEditMethod}></lightning-button>
+        </div>  
+        <div style="padding: 0px 3px 0px 10px;">
+            <div style="background-color:#DCDCDC;height:30px;padding: 5px 10px 0px 10px;">
+                <b> Family Information</b>
+            </div>
+            <div style="background-color:#DCDCDC;height:30px;padding: 5px 10px 0px 10px;">
+                <b> Relation</b>
+            </div>
+        </div>       
+        <lightning-record-edit-form
+        object-api-name='hed__Relationship__c'
+        record-id={relationId}
+        onsuccess={handleRelationSuccess}>
+        <div data-id="sectionStudentInfo" class="slds-grid slds-wrap  slds-p-bottom_large sectionStudentInfo">
+            <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                <lightning-input-field field-name="hed__RelatedContact__c" value={contactId} disabled='true'></lightning-input-field>
+            </div>
+            <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                <lightning-input-field field-name="hed__Type__c" disabled={relationInput}></lightning-input-field>
+            </div>
+            <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                <lightning-input-field field-name="hed__Contact__c" value={relationContactId} disabled='true'></lightning-input-field>
+            </div>
+        </div>
+        <div class="slds-var-m-top_medium">
+            <lightning-button class="slds-p-right_x-small" if:false={relationInput} variant="brand" type="submit" label="Save">
+            </lightning-button>
+            <lightning-button class="slds-p-right_x-small" if:false={relationInput} label="Cancel" onclick={handleRelationCancel}></lightning-button>
+        </div>
+        </lightning-record-edit-form>
+    </div>
+    <div>
+        <div class="slds-float_right slds-p-bottom_medium">
+            <lightning-button class="slds-p-right_x-small" if:true={editNameClick} label="Edit" onclick={handleNameEdit}></lightning-button>
+        </div>  
+        <div style="padding: 0px 3px 0px 10px;">
+            <div style="background-color:#DCDCDC;height:30px;padding: 5px 10px 0px 10px;">
+                <b>Relative Name</b>
+            </div>
+        </div>  
+        <lightning-record-edit-form
+        object-api-name='Contact'
+        record-id={relationContactId}
+        onsuccess={handleNameSuccess}>
+        <div data-id="sectionStudentInfo" class="slds-grid slds-wrap  slds-p-bottom_large sectionStudentInfo">
+            <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                <lightning-input-field field-name="Name" disabled={nameInput}></lightning-input-field>
+            </div>
+        </div>
+        <div class="slds-var-m-top_medium">
+            <lightning-button class="slds-p-right_x-small" if:false={nameInput} variant="brand" type="submit" label="Save">
+            </lightning-button>
+            <lightning-button class="slds-p-right_x-small" if:false={nameInput} label="Cancel" onclick={handleNameCancel}></lightning-button>
+        </div>
+        </lightning-record-edit-form>
+    </div>
+</template>

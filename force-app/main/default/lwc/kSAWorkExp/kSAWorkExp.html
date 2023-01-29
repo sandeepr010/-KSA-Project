@@ -1,0 +1,36 @@
+<template>
+    <div class="slds-float_right slds-p-bottom_medium">
+        <lightning-button class="slds-p-right_x-small" if:true={editclick} label="Edit" onclick={onEdit}></lightning-button>
+    </div>
+    <div style="padding: 0px 3px 0px 10px;">
+        <div style="background-color:#DCDCDC;height:30px;padding: 5px 10px 0px 10px;">
+            <b> Work Experience And Activities</b>
+        </div>
+    </div>        
+    <lightning-record-edit-form
+    object-api-name="Work_Experience__c"
+    record-id={workId}
+    onsuccess={handleSuccess}>
+    <div data-id="sectionStudentInfo" class="slds-grid slds-wrap  slds-p-bottom_large sectionStudentInfo">
+        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+            <lightning-input-field field-name="Organisation_s_Name__c" disabled={isEditMode}></lightning-input-field>
+        </div>
+        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+            <lightning-input-field field-name="Designation__c" disabled={isEditMode}></lightning-input-field>
+        </div>
+        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+            <lightning-input-field field-name="No_of_months__c" disabled={isEditMode}></lightning-input-field>
+        </div>
+        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+            <lightning-input-field field-name="Role_Description__c" disabled={isEditMode}></lightning-input-field>
+        </div>
+       
+        
+    </div>
+    <div class="slds-var-m-top_medium">
+        <lightning-button class="slds-p-right_x-small" if:false={isEditMode} variant="brand" type="submit" label="Save">
+        </lightning-button>
+        <lightning-button class="slds-p-right_x-small" if:false={isEditMode} label="Cancel" onclick={handleCancel}></lightning-button>
+    </div>
+</lightning-record-edit-form>
+</template>

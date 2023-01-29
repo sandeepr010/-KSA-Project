@@ -1,0 +1,83 @@
+<template>
+    <div class="slds-float_right slds-p-bottom_medium">
+        <lightning-button class="slds-p-right_x-small" if:true={editclick} label="Edit" onclick={onEdit}></lightning-button>
+    </div>
+    <div style="padding: 0px 3px 0px 10px;">
+        <div style="background-color:#DCDCDC;height:30px;padding: 5px 10px 0px 10px;">
+            <b> Prior Knowledge and Skills</b>
+        </div>
+    </div>        
+    <lightning-record-edit-form
+    object-api-name="Skills_and_Achievements__c"
+    record-id={skillsId}
+    onsuccess={handleSuccess}>
+    <div data-id="sectionStudentInfo" class="slds-grid slds-wrap  slds-p-bottom_large sectionStudentInfo">
+        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+            <lightning-input-field field-name="Proficient_in_Mathematics__c" disabled={isEditMode}></lightning-input-field>
+        </div>
+        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+            <lightning-input-field field-name="Comfortable_with_Basic_Computer_Skills__c" disabled={isEditMode}></lightning-input-field>
+        </div>
+        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+            <lightning-input-field field-name="Programming_Experience__c" disabled={isEditMode}></lightning-input-field>
+        </div>
+        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+            <lightning-input-field field-name="Which_Programming_Language_Have_You_Used__c" disabled={isEditMode}></lightning-input-field>
+        </div>
+        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+            <lightning-input-field field-name="Project_Description__c" disabled={isEditMode}></lightning-input-field>
+        </div>
+        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+            <lightning-input-field field-name="Code_Source__c" disabled={isEditMode}></lightning-input-field>
+        </div>
+        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+            <lightning-input-field field-name="Website__c" disabled={isEditMode}></lightning-input-field>
+        </div>
+        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+            <lightning-input-field field-name="Python_Basics__c" disabled={isEditMode}></lightning-input-field>
+        </div>
+        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+            <lightning-input-field field-name="Able_to_use_Jupiter_Notebook__c" disabled={isEditMode}></lightning-input-field>
+        </div>
+        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+            <lightning-input-field field-name="Understand_and_Use_Python_Data_Structure__c" disabled={isEditMode}></lightning-input-field>
+        </div>
+        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+            <lightning-input-field field-name="Understanding_of_algorithm_and_DS__c" disabled={isEditMode}></lightning-input-field>
+        </div>
+        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+            <lightning-input-field field-name="Implement_programs_based_on_Algorithm__c" disabled={isEditMode}></lightning-input-field>
+        </div>
+        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+            <lightning-input-field field-name="Build_Python_Class_to_Create_Objects__c" disabled={isEditMode}></lightning-input-field>
+        </div>
+        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+            <lightning-input-field field-name="Fundamentals_of_Mathematics__c" disabled={isEditMode}></lightning-input-field>
+        </div>
+        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+            <lightning-input-field field-name="Year_of_Experience__c" disabled={isEditMode}></lightning-input-field>
+        </div>
+        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+            <lightning-input-field field-name="Which_Programming_Language_Have_You_Used__c" disabled={isEditMode}></lightning-input-field>
+        </div>
+        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+            <lightning-input-field field-name="Taken_Any_Course_In_Programming_Language__c" disabled={isEditMode}></lightning-input-field>
+        </div>
+        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+            <lightning-input-field field-name="Course_Name__c" disabled={isEditMode}></lightning-input-field>
+        </div>
+        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+            <lightning-input-field field-name="Institution_Name__c" disabled={isEditMode}></lightning-input-field>
+        </div>
+        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+            <lightning-input-field field-name="Taken_Any_Course_About_Linux__c" disabled={isEditMode}></lightning-input-field>
+        </div>
+        
+    </div>
+    <div class="slds-var-m-top_medium">
+        <lightning-button class="slds-p-right_x-small" if:false={isEditMode} variant="brand" type="submit" label="Save">
+        </lightning-button>
+        <lightning-button class="slds-p-right_x-small" if:false={isEditMode} label="Cancel" onclick={handleCancel}></lightning-button>
+    </div>
+</lightning-record-edit-form>
+</template>

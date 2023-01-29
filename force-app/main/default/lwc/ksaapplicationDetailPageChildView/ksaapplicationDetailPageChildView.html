@@ -1,0 +1,692 @@
+<template>
+    <div if:true={application} onscroll={handleScroll} class="slds-modal__content slds-m-top_x-small slds-m-right_x-small slds-m-left_x-small slds-m-bottom_x-small slds-scrollable_y" style=" height: 550px; ">
+        <template if:true={sldsSpinner}>
+            <div class="exampleHolder">
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            </div>
+        </template>
+        <div class="slds-clearfix">
+            <div class="slds-float_right slds-p-bottom_medium">
+                <lightning-button class="slds-p-right_x-small" if:false={isEditMode} label="Edit" onclick={handleEdit}></lightning-button>
+                <lightning-button class="slds-p-right_x-small" if:true={isEditMode} label="Save" variant="brand" onclick={handleSave}></lightning-button>
+                <lightning-button class={ShowBtn} label="Next" variant="brand" onclick={handleNext} data-id="nextbtn"></lightning-button>
+                <lightning-button class="slds-p-right_x-small" if:true={isEditMode} label="Cancel" onclick={handleCancel}></lightning-button>
+                <!-- <lightning-button class="slds-p-left_small" if:true={isEditMode}  label="Back" variant="brand" onclick={previousButton}></lightning-button> -->
+                <lightning-button class="slds-p-right_x-small" label="Back"  onclick={previousButton} data-id="nextbtn"></lightning-button>
+            </div>
+        </div>
+
+
+        <template if:true={isPersonalInfoStep}> 
+        <div style="padding: 0px 3px 0px 10px;">
+            <div style="background-color:#DCDCDC;height:30px;padding: 5px 10px 0px 10px;">
+                <b> Personal Information</b>
+            </div>
+        </div>        
+        <div data-id="sectionStudentInfo" class="slds-grid slds-wrap  slds-p-bottom_large sectionStudentInfo">
+            <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                <lightning-input name="firstName" disabled={isDisabled} label="First Name" required="true"  value={application.applicant.firstName} onchange={handleApplicant}></lightning-input>
+            </div>
+            
+            <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                <lightning-input name="lastName" disabled={isDisabled} label="Last Name" value={application.applicant.lastName} onchange={handleApplicant}></lightning-input>
+            </div>
+            <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                <lightning-input type="date" disabled={isDisabled}  required="true" name="dateOfBirth" label="Date Of Birth" value={application.applicant.dateOfBirth} onchange={handleApplicant}></lightning-input>
+            </div>
+            
+            <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                <lightning-input type="tel" disabled={isDisabled}  name="mobile" required="true" label="Mobile" value={application.applicant.mobile} onchange={handleApplicant}></lightning-input>
+            </div>
+            <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                <lightning-input type="email" disabled={isDisabled}  name="email" required="true" label="Email" value={application.applicant.email} onchange={handleApplicant}></lightning-input>
+            </div>
+            <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                <lightning-combobox
+                    data-id="Gender"
+                    disabled={isDisabled}
+                    required="true"
+                    name="gender"
+                    label="Gender"
+                    value={application.applicant.gender}
+                    placeholder="Select Gender"
+                    options={genderOptions}
+                    onchange={handleApplicant} ></lightning-combobox>
+            </div>
+            <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                <lightning-input name="highestqualification" disabled={isDisabled} required="true" label="Highest Qualification" value= "BE" onchange={handleApplicant}></lightning-input>
+            </div> 
+
+            <!-- <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                <lightning-input name="bankname" disabled={isDisabled} label="Bank Name" required="true"  value="City Union Bank" onchange={handleApplicant}></lightning-input>
+            </div>
+            <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                <lightning-input name="accountnumber" disabled={isDisabled} label="Bank Account Number" value="4,42,34,324" onchange={handleApplicant}></lightning-input>
+            </div>
+            <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                <lightning-input name="ifsccode" disabled={isDisabled} required="true" label="IFSC Code" value="2134234" onchange={handleApplicant}></lightning-input>
+            </div> -->
+           
+            <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                <lightning-input name="courseapplied" disabled={isDisabled}  label="Course Applied" value="Apex Programming" onchange={handleApplicant}></lightning-input>
+            </div>
+<!-- 
+            <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                <lightning-input name="aadharname" disabled={isDisabled} label="Aadhar Number"  value="733035070174" onchange={handleApplicant}></lightning-input>
+            </div>
+            <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                <lightning-input type="tel" disabled={isDisabled}  name="mobile" required="true" label=" Contact Mobile" value=123456789 onchange={handleApplicant}></lightning-input>
+            </div> -->
+            <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                <lightning-input type="date" disabled={isDisabled}  required="true" name="dateOfBirth" label="Date Of Birth" value={application.applicant.dateOfBirth} onchange={handleApplicant}></lightning-input>
+            </div>
+            <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                <lightning-input name="ageasondate" disabled="true" label="Age As On Date" value="27" onchange={handleApplicant}></lightning-input>
+            </div>
+
+        </div>
+    </template>
+
+    <template if:true={isAddressInfoStep}> 
+        <div style="padding: 0px 3px 0px 10px;">
+            <div style="background-color:#DCDCDC;height:30px;padding: 5px 10px 0px 10px;">
+                <b>Address Information</b>
+            </div>
+        </div>
+        <div data-id="AddressDetailsInfo" class="AddressDetailsInfo" >
+            <template for:each = {application.addresses} for:item="rec" for:index="index">
+                <div key={rec.recordId} class="slds-grid slds-wrap  slds-p-bottom_large">
+                    <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                        <lightning-input data-id={index} name="mailingStreet" disabled={isDisabled} required="true" label="Mailing Street line 1" value={rec.mailingStreet} onchange={handleAddress}></lightning-input>
+                    </div> 
+                    <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                        <lightning-input data-id={index} name="mailingDistrict" disabled={isDisabled} required="true" label="Mailing City" value={rec.mailingDistrict} onchange={handleAddress}></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                        <lightning-input data-id={index} name="mailingState" disabled={isDisabled} required="true" label="Mailing State" value={rec.mailingState} onchange={handleAddress}></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                        <lightning-input data-id={index} name="mailingCountry" disabled={isDisabled} required="true" label="Mailing Country" value={rec.mailingCountry} onchange={handleAddress} ></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                        <lightning-input data-id={index} name="mailingPostalCode" disabled={isDisabled} required="true" label="Mailing Postal Code" value={rec.mailingPostalCode} onchange={handleAddress} ></lightning-input>
+                    </div>
+                </div>
+            </template>
+        </div>
+        </template>
+
+
+        <template if:true={isFamilyInfoStep}> 
+        <div style="padding: 0px 3px 0px 10px;">
+            <div style="background-color:#DCDCDC;height:30px;padding: 5px 10px 0px 10px;">
+                <b> Family Information</b>
+            </div>
+        </div>
+        <div data-id="FamilyInformationInfo" class="FamilyInformationInfo">
+            <template for:each = {application.applicantRelations} for:item="rec" for:index="index">
+                    <div key={rec.recordId} class="slds-grid slds-wrap slds-p-bottom_large">
+                        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                            <lightning-combobox
+                                data-id={index}
+                                disabled={isDisabled}
+                                required="true"
+                                name="relationshipType"
+                                label="Relationship with Applicant"
+                                value={rec.relationshipType}
+                                placeholder="Select Relationship Type"
+                                options={relationshipTypeOptions}
+                                onchange={handleFamilyInformation} ></lightning-combobox>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                            <lightning-input data-id={index} name="firstName" disabled={isDisabled} required="true"  label="First Name" value={rec.firstName} onchange={handleFamilyInformation}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                            <lightning-input data-id={index} name="lastName" disabled={isDisabled} required="true" label="Last Name" value={rec.lastName} onchange={handleFamilyInformation}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                            <lightning-input data-id={index} type="tel" disabled={isDisabled} name="mobile" required="true" label="Mobile" value={rec.mobile} onchange={handleFamilyInformation}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                            <lightning-input data-id={index} type="email" disabled={isDisabled} name="email" required="true" label="Email" value={rec.email} onchange={handleFamilyInformation}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                            <lightning-input data-id={index} name="age" disabled={isDisabled} label="Age" required="true" value={rec.age} onchange={handleFamilyInformation}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                            <lightning-input data-id={index} name="occupation" disabled={isDisabled} required="true" label="Occupation" value={rec.occupation} onchange={handleFamilyInformation}></lightning-input>
+                        </div>
+                        <!-- <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                            <lightning-input data-id={index} name="currencyType" disabled={isDisabled} label="Currency Type" value={rec.currencyType} onchange={handleFamilyInformation}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                            <lightning-input data-id={index} type="number" disabled={isDisabled}  name="annualIncome"  label="Annual Income" value={rec.annualIncome} onchange={handleFamilyInformation}></lightning-input>
+                        </div>                                                 -->
+                    </div>
+                </template>
+                </div>
+        </template>
+
+<!-- 
+        <template if:true={isCourseInfoStep}> 
+        <div class="slds-m-top_small" style="padding: 0px 3px 0px 10px;">
+            <div style="background-color:#DCDCDC;height:30px;padding: 5px 10px 0px 10px;">
+                <b>Course Details</b>
+            </div>
+        </div>
+
+        <div data-id="EmploymentDetails" class="EmploymentDetailsInfo">
+            <template for:each = {application.workExperiences} for:item="rec" for:index="index">
+                <div key={rec.recordId} class="slds-grid slds-wrap  slds-p-bottom_large">
+                    <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                        <lightning-combobox
+                            data-id={index}
+                            disabled={isDisabled}
+                            name="jobType"
+                            label="Job Type"
+                            value={rec.jobType}
+                            placeholder="Select Option"
+                            options={jobTypeOptions}
+                            onchange={handleWorkExperience} ></lightning-combobox>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                        <lightning-input data-id={index} name="organisationName" disabled={isDisabled} label="Company" value={rec.organisationName} onchange={handleWorkExperience}></lightning-input>
+                    </div> 
+                    <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                        <lightning-input data-id={index} name="industryType" disabled={isDisabled} label="Industry Type" value={rec.industryType} onchange={handleWorkExperience}></lightning-input>
+                    </div>  
+                    <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                        <lightning-input data-id={index} name="location" disabled={isDisabled} label="Location" value={rec.location} onchange={handleWorkExperience}></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                        <lightning-input data-id={index} name="designation" disabled={isDisabled} label="Roles/KRA" value={rec.designation} onchange={handleWorkExperience}></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                        <lightning-input data-id={index} type="date" name="dateOfJoining" disabled={isDisabled} required="true" label="Date Of Joining" value={rec.dateOfJoining} onchange={handleWorkExperience} ></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                        <lightning-input data-id={index} type="date" name="dateOfLeaving" disabled={isDisabled} required="true" label="Date Of Leaving" value={rec.dateOfLeaving} onchange={handleWorkExperience} ></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                        <lightning-input data-id={index} name="currencyType" disabled={isDisabled}  label="Currency Type" value={rec.currencyType} onchange={handleWorkExperience}></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                        <lightning-input data-id={index} name="annualSalary" disabled={isDisabled} required="true" label="Annual Income" value={rec.annualSalary} onchange={handleWorkExperience}></lightning-input>
+                    </div>
+                </div>
+            </template>
+        </div> 
+        </template> -->
+
+
+    <template if:true={isEducationInfoStep}> 
+        <div class="slds-m-top_small" style="padding: 0px 3px 0px 10px;">
+            <div style="background-color:#DCDCDC;height:30px;padding: 5px 10px 0px 10px;">
+                <b>Educational Qualifications</b>
+            </div>
+        </div>
+        <div data-id="EducationalQualificationsInfo" class="EducationalQualificationsInfo">
+            <template for:each = {educationHitory} for:item="rec" for:index="index">
+                    <div if:false={rec.isSchool} key= {rec.recordId} class="slds-grid slds-wrap slds-p-bottom_large">
+                        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                            <lightning-combobox
+                                data-id={index}
+                                disabled={isDisabled}
+                                required="true"
+                                name="educationHistoryType"
+                                label="Level"
+                                value={rec.educationHistoryType}
+                                placeholder="Select Option"
+                                options={EducationHistoryTypeOptions}
+                                onchange={handleEducation} ></lightning-combobox>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                            <lightning-input data-id={index} name="institutionName" disabled={isDisabled}  required="true" label="University/Institution with Campus Name" value={rec.institutionName} onchange={handleEducation}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                            <lightning-input data-id={index} disabled={isDisabled} name="yearOfPassing" label="Year Of Completion" value={rec.yearOfPassing}  onchange={handleEducation}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                            <lightning-input  data-id={index} name="degreeCGPADGPA" disabled={isDisabled} required="true"  label="Percentage/CGPA" value={rec.degreeCGPADGPA} onchange={handleEducation}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                            <lightning-input  data-id={index} name="obtainedMarks" disabled={isDisabled} required="true"  label="Obtained Marks" value={rec.obtainedMarks} onchange={handleEducation}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                            <lightning-combobox
+                                data-id={index}
+                                disabled={isDisabled}
+                                name="educationType"
+                                label="Education Type"
+                                value={rec.educationType}
+                                placeholder="Select Option"
+                                options={educationTypeOptions}
+                                onchange={handleEducation} ></lightning-combobox>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                            <lightning-combobox
+                                data-id={index}
+                                disabled={isDisabled}
+                                name="degreeEarned"
+                                label="Degree"
+                                value={rec.degreeEarned}
+                                placeholder="Select Option"
+                                options={degreeEarnedOptions}
+                                onchange={handleEducation} ></lightning-combobox>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                            <lightning-input  data-id={index} name="semesteryearwiseMarks" disabled={isDisabled} required="true" label="Type" value={rec.semesteryearwiseMarks} onchange={handleEducation}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                            <lightning-combobox
+                                data-id={index}
+                                disabled={isDisabled}
+                                
+                                required="true"
+                                name="country"
+                                label="Country"
+                                value={rec.country}
+                                placeholder="Select Option"
+                                options={educationHistoryCountryOptions}
+                                onchange={handleEducation} ></lightning-combobox>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                            <lightning-input  data-id={index} name="state" disabled={isDisabled} required="true" label="State" value={rec.state} onchange={handleEducation}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                            <lightning-input  data-id={index} name="city" disabled={isDisabled} required="true" label="City" value={rec.city} onchange={handleEducation}></lightning-input>
+                        </div>
+                    </div>
+                    <div if:true={rec.isSchool} key= {rec.recordId} class="slds-grid slds-wrap slds-p-bottom_large">
+                        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                            <lightning-combobox
+                                data-id={index}
+                                required="true"
+                                name="educationHistoryType"
+                                label="Level"
+                                value={rec.educationHistoryType}
+                                placeholder="Select Option"
+                                options={EducationHistoryTypeOptions}
+                                onchange={handleEducation} ></lightning-combobox>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                            <lightning-input data-id={index} name="institutionName" disabled={isDisabled}  required="true" label="School Name" value={rec.institutionName} onchange={handleEducation}></lightning-input>
+                        </div>       
+                        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                            <lightning-input data-id={index} disabled={isDisabled}  required="true" name="yearOfPassing" label="Year Of Completion" value={rec.yearOfPassing}  onchange={handleEducation}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                            <lightning-input  data-id={index} name="degreeCGPADGPA" disabled={isDisabled} required="true" label="Percentage/CGPA" value={rec.degreeCGPADGPA} onchange={handleEducation}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                            <lightning-input  data-id={index} name="obtainedMarks" disabled={isDisabled} required="true"  label="Obtained Marks" value={rec.obtainedMarks} onchange={handleEducation}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                            <lightning-input  data-id={index} name="educationType" disabled={isDisabled} required="true" label="Education Type" value={rec.educationType} onchange={handleEducation}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                            <lightning-combobox
+                                data-id={index}
+                                disabled={isDisabled}
+                                required="true"
+                                name="country"
+                                label="Country"
+                                value={rec.country}
+                                placeholder="Select Option"
+                                options={educationHistoryCountryOptions}
+                                onchange={handleEducation} ></lightning-combobox>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                            <lightning-input  data-id={index} name="state" disabled={isDisabled} required="true" label="State" value={rec.state} onchange={handleEducation}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                            <lightning-input  data-id={index} name="city" disabled={isDisabled} required="true" label="City" value={rec.city} onchange={handleEducation}></lightning-input>
+                        </div>
+                    </div>
+            </template>
+        </div>
+    </template>
+
+
+    <template if:true={isSkillsInfoStep}> 
+        <div style="padding: 0px 3px 0px 10px;">
+            <div style="background-color:#DCDCDC;height:30px;padding: 5px 10px 0px 10px;">
+                <b>Skill Information</b>
+            </div>
+        </div>
+        <div data-id="OtherInformation" class="slds-grid slds-wrap  slds-p-bottom_large OtherInfo">
+            <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                <lightning-input name="sportsAchievements" disabled={isDisabled} label="Sports Achievements" value={application.applicationWrapper.sportsAchievements} onchange={handleOtherDetails}></lightning-input>
+            </div> 
+            <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                <lightning-input name="professionalAchievements" disabled={isDisabled} label="Professional Achievements" value={application.applicationWrapper.professionalAchievements} onchange={handleOtherDetails}></lightning-input>
+            </div>  
+            <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                <lightning-input name="extraCurricularActivities" disabled={isDisabled} label="Extra Curricular Activities(Social/Political/Personal etc)" value={application.applicationWrapper.extraCurricularActivities} onchange={handleOtherDetails}></lightning-input>
+            </div>
+            <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                <lightning-input name="exceptionalAcademicAchievements" disabled={isDisabled} label="Exceptional Academic Achievements" value={application.applicationWrapper.exceptionalAcademicAchievements} onchange={handleOtherDetails}></lightning-input>
+            </div>
+            <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                <lightning-combobox
+                    data-id={index}
+                    disabled={isDisabled}
+                    required="true"
+                    name="howDoYouPlanToFundYourEducation"
+                    label="How Do You Plan To Fund Your Education"
+                    value={application.applicationWrapper.howDoYouPlanToFundYourEducation}
+                    placeholder="Select Option"
+                    options={howDoYouPlanToFundYourEducationOptions}
+                    onchange={handleOtherDetails} ></lightning-combobox>
+            </div>
+            <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                <lightning-combobox
+                    data-id={index}
+                    disabled={isDisabled}
+                    required="true"
+                    name="isDifferentlyAbled"
+                    label="Are you physically challenged or suffering from permanent disability?"
+                    value={application.applicant.isDifferentlyAbled}
+                    placeholder="Select Option"
+                    options={isDifferentlyAbledOptions}
+                    onchange={handleApplicant} ></lightning-combobox>
+            </div>
+            <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                <lightning-input name="statementOfPurpose" disabled={isDisabled} required="true" label="Statement Of Purpose" value={application.applicationWrapper.statementOfPurpose} onchange={handleOtherDetails} ></lightning-input>
+            </div>
+            <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                <lightning-input name="mastersPlan" disabled={isDisabled} label="What do you plan to do after finishing a master’s degree at S P Jain?" value={application.applicationWrapper.mastersPlan} onchange={handleOtherDetails} ></lightning-input>
+            </div>
+            <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                <lightning-combobox
+                    data-id={index}
+                    disabled={isDisabled}
+                    name="companySponsorship"
+                    label="Are You Sponsored By Your Company?"
+                    value={application.applicationWrapper.companySponsorship}
+                    placeholder="Select Option"
+                    options={companyScholarshipOptions}
+                    onchange={handleOtherDetails} ></lightning-combobox>
+            </div>
+        </div>
+        </template>
+
+        <template if:true={isCareerInfoStep}> 
+         <div style="padding: 0px 3px 0px 10px;">
+            <div style="background-color:#DCDCDC;height:30px;padding: 5px 10px 0px 10px;">
+                <b>Career Goals & Expectation</b>
+            </div>
+        </div>
+        <div data-id="LanguageProficiencyDetailsInfo" class="LanguageProficiencyDetailsInfo">
+            <template for:each = {application.languages} for:item="rec" for:index="index">
+                <div key={rec.recordId} class="slds-grid slds-wrap  slds-p-bottom_medium">
+                    <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                        <lightning-input data-id={index} name="languageName" disabled={isDisabled} required="true" label="Name" value={rec.languageName} onchange={handleLanguageDetails}></lightning-input>
+                    </div>
+                    <!-- <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                        <lightning-combobox
+                            data-id={index}
+                            disabled={isDisabled}
+                            required="true"
+                            name="proficiency"
+                            label="Proficiency"
+                            value={rec.proficiency}
+                            placeholder="Select Option"
+                            options={proficiencyOptions}
+                            onchange={handleLanguageDetails} ></lightning-combobox>
+                    </div> -->
+
+                    <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                        <lightning-input name="professionalAchievements" disabled={isDisabled} label="Please Specify Your Career Goals" value={application.applicationWrapper.professionalAchievements} onchange={handleOtherDetails}></lightning-input>
+                    </div>  
+                    <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                        <lightning-input name="extraCurricularActivities" disabled={isDisabled} label=" Explain what you would like to achive through SIC" value={application.applicationWrapper.extraCurricularActivities} onchange={handleOtherDetails}></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                        <lightning-input name="exceptionalAcademicAchievements" disabled={isDisabled} label="How did you find out about SIC" value={application.applicationWrapper.exceptionalAcademicAchievements} onchange={handleOtherDetails}></lightning-input>
+                    </div>
+
+                </div>
+            </template>
+        </div>
+        </template>
+        <template if:true={isworkExp}>
+
+
+        <div class="slds-m-top_small" style="padding: 0px 3px 0px 10px;">
+            <div style="background-color:#DCDCDC;height:30px;padding: 5px 10px 0px 10px;">
+                <b>Work Experience And  Activities</b>
+            </div>
+        </div>
+
+        <div data-id="EmploymentDetails" class="EmploymentDetailsInfo">
+            <template for:each = {application.workExperiences} for:item="rec" for:index="index">
+                <div key={rec.recordId} class="slds-grid slds-wrap  slds-p-bottom_large">
+                    <!-- <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                        <lightning-combobox
+                            data-id={index}
+                            disabled={isDisabled}
+                            name="jobType"
+                            label="Job Type"
+                            value={rec.jobType}
+                            placeholder="Select Option"
+                            options={jobTypeOptions}
+                            onchange={handleWorkExperience} ></lightning-combobox>
+                    </div> -->
+                    <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                        <lightning-input data-id={index} name="organisationName" disabled={isDisabled} label="Company" value={rec.organisationName} onchange={handleWorkExperience}></lightning-input>
+                    </div> 
+                    <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                        <lightning-input data-id={index} name="industryType" disabled={isDisabled} label="Industry Type" value={rec.industryType} onchange={handleWorkExperience}></lightning-input>
+                    </div>  
+                    <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                        <lightning-input data-id={index} name="location" disabled={isDisabled} label="Location" value={rec.location} onchange={handleWorkExperience}></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                        <lightning-input data-id={index} name="designation" disabled={isDisabled} label="Roles/KRA" value={rec.designation} onchange={handleWorkExperience}></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                        <lightning-input data-id={index} type="date" name="dateOfJoining" disabled={isDisabled} required="true" label="Date Of Joining" value={rec.dateOfJoining} onchange={handleWorkExperience} ></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                        <lightning-input data-id={index} type="date" name="dateOfLeaving" disabled={isDisabled} required="true" label="Date Of Leaving" value={rec.dateOfLeaving} onchange={handleWorkExperience} ></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                        <lightning-input data-id={index} name="currencyType" disabled={isDisabled}  label="Currency Type" value={rec.currencyType} onchange={handleWorkExperience}></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                        <lightning-input data-id={index} name="annualSalary" disabled={isDisabled} required="true" label="Annual Income" value={rec.annualSalary} onchange={handleWorkExperience}></lightning-input>
+                    </div>
+                </div>
+            </template>
+        </div> 
+        </template>
+        <template if:true={isCertificationInfoStep}>
+
+        <div class="slds-m-top_small" style="padding: 0px 3px 0px 10px;">
+            <div style="background-color:#DCDCDC;height:30px;padding: 5px 10px 0px 10px;">
+                <b>Certification and Awards</b>
+            </div>
+        </div>
+
+        <div data-id="EmploymentDetails" class="EmploymentDetailsInfo">
+           <!---- <template for:each = {application.workExperiences} for:item="rec" for:index="index">-->
+                <div  class="slds-grid slds-wrap  slds-p-bottom_large">
+                    <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                        <lightning-combobox
+                            data-id={index}
+                            disabled={isDisabled}
+                            name="jobType"
+                            label="Job Type"
+                            value={rec.jobType}
+                            placeholder="Select Option"
+                            options={jobTypeOptions}
+                            onchange={handleWorkExperience} ></lightning-combobox>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                        <lightning-input data-id={index} name="organisationName" disabled={isDisabled} label="Company" value={rec.organisationName} onchange={handleWorkExperience}></lightning-input>
+                    </div> 
+                    <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                        <lightning-input data-id={index} name="industryType" disabled={isDisabled} label="Industry Type" value={rec.industryType} onchange={handleWorkExperience}></lightning-input>
+                    </div>  
+                    <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                        <lightning-input data-id={index} name="location" disabled={isDisabled} label="Location" value={rec.location} onchange={handleWorkExperience}></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                        <lightning-input data-id={index} name="designation" disabled={isDisabled} label="Roles/KRA" value={rec.designation} onchange={handleWorkExperience}></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                        <lightning-input data-id={index} type="date" name="dateOfJoining" disabled={isDisabled} required="true" label="Date Of Joining" value={rec.dateOfJoining} onchange={handleWorkExperience} ></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                        <lightning-input data-id={index} type="date" name="dateOfLeaving" disabled={isDisabled} required="true" label="Date Of Leaving" value={rec.dateOfLeaving} onchange={handleWorkExperience} ></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                        <lightning-input data-id={index} name="currencyType" disabled={isDisabled}  label="Currency Type" value={rec.currencyType} onchange={handleWorkExperience}></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                        <lightning-input data-id={index} name="annualSalary" disabled={isDisabled} required="true" label="Annual Income" value={rec.annualSalary} onchange={handleWorkExperience}></lightning-input>
+                    </div>
+                </div>
+            
+        </div>
+    </template>
+
+    <template if:true={isEssayInfoStep}>
+
+
+
+
+        <div class="slds-m-top_small" style="padding: 0px 3px 0px 10px;">
+            <div style="background-color:#DCDCDC;height:30px;padding: 5px 10px 0px 10px;">
+                <b>Essay</b>
+            </div>
+        </div>
+
+        <div data-id="EmploymentDetails" class="EmploymentDetailsInfo">
+            <template for:each = {application.workExperiences} for:item="rec" for:index="index">
+                <div key={rec.recordId} class="slds-grid slds-wrap  slds-p-bottom_large">
+                   
+                    <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                        <lightning-input data-id={index} name="organisationName" disabled={isDisabled} label="tell us about yourself and why you are appling for SIC(300 words)" value={rec.organisationName} onchange={handleWorkExperience}></lightning-input>
+                    </div> 
+                    <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                        <lightning-input data-id={index} name="industryType" disabled={isDisabled} label=" Please describe your passion in the course topic you have selected(300 words)" value={rec.industryType} onchange={handleWorkExperience}></lightning-input>
+                    </div>  
+                                       
+                </div>
+            </template>
+        </div>
+    </template>
+
+
+
+        <template if:true={isNeetInfoStep}>  
+            <div style="padding: 0px 3px 0px 10px;">
+                <div style="background-color:#DCDCDC;height:30px;padding: 5px 10px 0px 10px;">
+                    <b>Unprivileged Population</b>
+                </div>
+            </div>
+            <lightning-card></lightning-card>
+                        <div>
+                            <!-- <lightning-card title="Payment Details" icon-name="custom:custom14"> -->
+                                <lightning-card >
+                                <div class="slds-m-around_medium">
+                                   
+                                        <!-- <p><lightning-formatted-text value="Payment Status : Paid" onchange={handleChange}></lightning-formatted-text></p> 
+                                        <!<p><lightning-formatted-text value={status} onchange={handleChange}></lightning-formatted-text></p> -->
+                                        <!-- <p><lightning-formatted-text value="Amount : ₹ 38940" onchange={handleChange}></lightning-formatted-text></p> --> 
+                                        <div class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                                            <lightning-input  data-id={index} name="educationType" disabled={isDisabled} required="true" label="Do You belong to the Unprivileged Population?" value={rec.educationType} onchange={handleEducation}></lightning-input>
+                                        </div>
+
+                                        
+                                    <!-- <template if:true={areDetailsVisible}>
+                                        <div class="slds-m-vertical_medium">
+                                            Payment has been done!
+                                        </div>
+                                    </template> -->
+                                </div>
+                            </lightning-card>
+                        </div> 
+                        
+                                     
+                </template> 
+
+                
+                    
+            
+            </div>
+            
+
+             
+    
+    <!--
+            <div style="padding: 0px 3px 0px 10px;">
+                <div style="background-color:#DCDCDC;height:30px;padding: 5px 10px 0px 10px;">
+                    <b>Declaration Information</b>
+                </div>
+            </div>
+            <div data-id="DeclarationInformationInfo"  class="slds-col slds-size_1-of-1" style="padding: 0px 30px 0px 30px;">
+                <div class="slds-m-top_x-small slds-m-left_x-small slds-m-right_x-small">
+                    * I Do hearby give an undertaking to abide by the following rules and regulations laid downby the school Management.
+                </div> <div class="slds-m-top_x-small slds-m-left_x-small slds-m-right_x-small">
+                1. We shall co-operative with the school authorities and the concerned class/subject teachers in the development of our child.
+                </div><div class="slds-m-top_x-small slds-m-left_x-small slds-m-right_x-small">
+                2. We understand that misbehaviourwith any staff of the school is not acceptable and in such an event management reserves 
+                the right to take any disiplinary action including the withdrawal of admission granted to the child.
+                </div><div class="slds-m-top_x-small slds-m-left_x-small slds-m-right_x-small">
+                3. Communication/Correspondence with the class/subjects teachers will be during school working hours through the
+                Principle/Co-ordinator.
+                </div><div class="slds-m-top_x-small slds-m-left_x-small slds-m-right_x-small">
+                4. Our relationship with all the staff of the school will be courteous and polite at all times.                   
+                </div>  
+                <div class="slds-m-top_x-small slds-m-left_x-small slds-m-right_x-small">
+                    5. We will respect all school activities to promote our ancient indian culture and will not object in any way them.
+                </div>
+                <div class="slds-m-top_x-small slds-m-left_x-small slds-m-right_x-small">
+                    6. We will isit the school only at the stipulated time for any enquiries related to our child.
+                </div>
+                <div class="slds-m-top_x-small slds-m-left_x-small slds-m-right_x-small">
+                    7. We will take care not to send mobile phones/iPods,any such electronic gadgets and also see that our child does not wear 
+                    any valuble ornament.
+                </div>
+                <div class="slds-m-top_x-small slds-m-left_x-small slds-m-right_x-small">
+                    8. We have no objection to the singing of the National Anthem,Vande Mataram,etc and changing of shlokas and Bagawad Gita by
+                    Our son/daughter.
+                </div>
+                <div class="slds-m-top_x-small slds-m-left_x-small slds-m-right_x-small">
+                    9. We shall Strictly abide by the school uniform norms irrespective of our individual caste/creed/religion.
+                </div>
+                <div class="slds-m-top_x-small slds-m-left_x-small slds-m-right_x-small">
+                    10.We understand that our son/daughter must start attending classes with fifteen days of reopening of the school,failing
+                    which the admission will be cancelled automatically.We shall intimate and take permission from Management for leave of any sort,
+                    before the reopening.                    
+                </div>`
+                <div class="slds-m-top_x-small slds-m-left_x-small slds-m-right_x-small">
+                    11.We understand that cancellation of admission is not entertained and there is no refund/transfer of fees once paid.
+                </div>
+            
+                <div class="slds-m-top_x-small slds-m-left_x-small  slds-m-right_x-small ">
+                    12.Admission process is initiated by:
+                    <div if:true={application.processInitiatedBy} class="slds-col slds-size_1-of-2" style="padding: 0px 30px 0px 30px;">
+                        <lightning-input name="Application_Process_initiated_by" disabled={isDisabled} required="true" label="" value={application.processInitiatedBy} onchange={handleChange} ></lightning-input>
+                    </div>
+                </div>
+                        
+                <div class="slds-m-top_x-small slds-m-left_x-small slds-m-right_x-small slds-align_absolute-center">                    
+                    <lightning-input type="checkbox" data-id="buttonController" disabled={isDisabled} name="registered" label="I agree." onchange={onclicks} checked=false></lightning-input>
+                </div>
+            </div>-->
+            <!-- <div class="slds-clearfix">
+                <div class="slds-float_right slds-p-bottom_medium">
+                    <lightning-button class="slds-p-right_x-small" if:false={isEditMode} label="Edit" onclick={handleEdit}></lightning-button>
+                    <lightning-button class="slds-p-right_x-small" if:true={isEditMode} label="Save" variant="brand" onclick={handleSave}></lightning-button>
+                    <lightning-button class="slds-p-right_x-small" if:true={isEditMode} label="Cancel" onclick={handleCancel}></lightning-button>
+                </div>
+            </div> -->
+
+
+
+            </template>
+        </div>

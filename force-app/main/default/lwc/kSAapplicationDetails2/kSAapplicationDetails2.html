@@ -1,0 +1,48 @@
+<template>
+    <div if:true={application} onscroll={handleScroll} class="slds-modal__content slds-m-top_x-small slds-m-right_x-small slds-m-left_x-small slds-m-bottom_x-small slds-scrollable_y" style=" height: 550px; ">
+        <template if:true={sldsSpinner}>
+            <div class="exampleHolder">
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            </div>
+        </template>
+        <div class="slds-clearfix">
+            <div class="slds-float_right slds-p-bottom_medium">
+                <lightning-button class={ShowBtn} label="Next" variant="brand" onclick={handleNext} data-id="nextbtn"></lightning-button>
+                <lightning-button class="slds-p-right_x-small" label="Back"  onclick={previousButton} data-id="nextbtn"></lightning-button>
+            </div>
+        </div>
+    <template if:true={isPersonalInfoStep}>
+        <c-k-s-a-personal-info contact-id={contactId}></c-k-s-a-personal-info>
+    </template>
+    <template if:true={isAddressStep}>
+        <c-k-s-a-address address-id={addressId}></c-k-s-a-address>
+    </template>
+    <template if:true={isFamilyStep}>
+        <c-k-s-a-relation relation-id={relationId} relation-contact-id={relationContactId} contact-id={contactId}></c-k-s-a-relation>
+    </template>
+    <template if:true={isEducationStep}>
+        <c-ksa-educationinfo educationid={educationId} education-name={applingTo}></c-ksa-educationinfo>
+    </template>
+    <template if:true={isCourseStep}>
+        <c-k-s-a-course-completion course-id={skillsId}></c-k-s-a-course-completion>
+    </template>
+    <template if:true={isPriorSkillStep}>
+        <c-k-s-a-prior-knowledge skills-id={skillsId}></c-k-s-a-prior-knowledge>
+    </template>
+    <template if:true={isCareerStep}>
+        <c-ksa-career careerid={careerId}></c-ksa-career>
+    </template>
+    <template if:true={isWorkExpirenceStep}>
+        <c-k-s-a-work-exp work-id={workId}></c-k-s-a-work-exp>
+    </template>
+    <template if:true={isCertificateStep}>
+        <c-k-s-acetificate certificateid={skillsId}></c-k-s-acetificate>
+    </template>
+    <template if:true={isEassyStep}>
+        <c-k-s-a-eassy eassyid={applicationId}></c-k-s-a-eassy>
+    </template>
+    <template if:true={isUnpriviligedStep}>
+        <c-k-s-aunpriviliged unprivilid={applicationId}></c-k-s-aunpriviliged>
+    </template>
+</div>
+</template>

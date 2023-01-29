@@ -1,0 +1,36 @@
+<template>
+    <div class="slds-grid slds-gutters">
+        <div class="slds-col slds-size_2-of-12">
+            <div class="slds-progress slds-progress_vertical">
+                <ol class="slds-progress__list">
+                    <template for:each={pathAlign}  for:item="rec">
+                        <li key={rec.id} class={rec.status}>
+                            <template if:true={rec.active}>
+                                <div class="slds-progress__marker">
+                                    <span class="slds-assistive-text">Active</span>
+                                </div>
+                            </template> 
+                            <template if:false={rec.active}>
+                                <template if:true={rec.complete}>
+                                    <span class="slds-icon_container slds-icon-utility-success slds-progress__marker slds-progress__marker_icon" title="Complete">
+                                        <lightning-icon icon-name="utility:success" alternative-text="Success!" variant="Success" title="success variant xx-small" size="xx-small"></lightning-icon>
+                                        <span class="slds-assistive-text">Complete</span>
+                                    </span>
+                                </template>
+                                <template if:false={rec.complete}>
+                                    <div class="slds-progress__marker">
+                                        <span class="slds-assistive-text">inActive</span>
+                                    </div>
+                                </template>
+                            </template>
+                            <div class="slds-progress__item_content slds-grid slds-grid_align-spread">{rec.name}</div>
+                        </li>
+                </template>
+                </ol>
+            </div>
+        </div>
+        <div class="slds-col slds-size_10-of-12 " >
+            <c-k-s-aapplication-details2 record-id={recordId} onhandlenext={handleNext} onhandleback={handleBack} onapplingto={applingto}></c-k-s-aapplication-details2 >
+        </div>
+    </div>
+</template>
